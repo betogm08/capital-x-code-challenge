@@ -1,0 +1,66 @@
+{
+  "operacion_valida": {
+    "cliente_id": 1,
+    "facturas": [
+      {
+        "folio": "F1",
+        "deudor": "Deudor SA",
+        "monto": 1000.555,
+        "fecha_emision": "2026-06-01",
+        "fecha_vencimiento": "2026-09-01"
+      },
+      {
+        "folio": "F2",
+        "deudor": "Deudor SA",
+        "monto": 2000,
+        "fecha_emision": "2026-06-01",
+        "fecha_vencimiento": "2026-10-15"
+      }
+    ]
+  },
+  "operacion_facturas_invalidas": {
+    "cliente_id": 1,
+    "facturas": [
+      {
+        "folio": "F10",
+        "deudor": "Deudor SA",
+        "monto": -100,
+        "fecha_emision": "2026-06-01",
+        "fecha_vencimiento": "2026-09-01"
+      },
+      {
+        "folio": "F11",
+        "deudor": "Deudor SA",
+        "monto": 500,
+        "fecha_emision": "2026-08-01",
+        "fecha_vencimiento": "2026-09-01"
+      },
+      {
+        "folio": "F12",
+        "deudor": "Deudor SA",
+        "monto": 500,
+        "fecha_emision": "2026-06-01",
+        "fecha_vencimiento": "2026-07-15"
+      },
+      {
+        "folio": "F13",
+        "deudor": "Deudor SA",
+        "monto": 500,
+        "fecha_emision": "2026-06-01",
+        "fecha_vencimiento": "2027-03-01"
+      }
+    ]
+  },
+  "operacion_doble_financiamiento": {
+    "cliente_id": 1,
+    "facturas": [
+      {
+        "folio": "F1",
+        "deudor": "Deudor SA",
+        "monto": 300,
+        "fecha_emision": "2026-06-01",
+        "fecha_vencimiento": "2026-09-01"
+      }
+    ]
+  }
+}

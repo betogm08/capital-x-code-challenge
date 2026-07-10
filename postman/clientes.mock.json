@@ -1,0 +1,17 @@
+{
+  "cliente_valido": {
+    "razon_social": "Acme SA de CV",
+    "rfc": "aaa900101xx1",
+    "email": "contacto@acme.com"
+  },
+  "cliente_rfc_duplicado": {
+    "razon_social": "Otra Empresa SA",
+    "rfc": "AAA900101XX1",
+    "email": "otra@empresa.com"
+  },
+  "cliente_rfc_invalido": {
+    "razon_social": "Empresa Fantasma",
+    "rfc": "no-es-un-rfc",
+    "email": "fantasma@empresa.com"
+  }
+}
