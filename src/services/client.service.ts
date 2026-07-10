@@ -30,7 +30,7 @@ export function createClient(input: CreateClientInput): Client {
   try {
     return insertClient({ razon_social, rfc, email });
   } catch (error) {
-    // Safety net against race conditions between the check and the insert.
+    // Red de seguridad ante condiciones de carrera entre el check y el insert.
     if (isUniqueConstraintError(error)) {
       throw conflictError(DUPLICATE_RFC_MESSAGE);
     }

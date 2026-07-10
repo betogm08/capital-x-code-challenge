@@ -40,8 +40,8 @@ function insertOperation({
     .get(lastInsertRowid) as Operation;
 }
 
-// Atomic transaction: if insertInvoices fails (e.g. constraint violation),
-// better-sqlite3 also rolls back the operation insert.
+// Transacción atómica: si insertInvoices falla (ej. violación de constraint),
+// better-sqlite3 también revierte el insert de la operación.
 export function insertOperationWithInvoices(
   operation: OperationToInsert,
   invoices: InvoiceToInsert[],

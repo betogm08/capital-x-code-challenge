@@ -8,8 +8,8 @@ export interface AppError extends Error {
   details?: unknown;
 }
 
-// Marks errors created by the factories in this file, so the errorHandler
-// can recognize them without `instanceof` (which would require classes).
+// Marca los errores creados por las factories de este archivo, para que el
+// errorHandler los reconozca sin usar `instanceof` (que necesitaría clases).
 const APP_ERROR_MARKER = Symbol("appError");
 
 type InternalAppError = AppError & { [APP_ERROR_MARKER]: true };

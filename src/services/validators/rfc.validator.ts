@@ -1,16 +1,15 @@
 import { badRequestError } from "../../errors";
 
-// Persona Moral: 3 letters/Ñ/& + 6 digits (AAMMDD) + 3 alphanumeric homoclave characters.
+// Persona Moral: 3 letras/Ñ/& + 6 dígitos (AAMMDD) + 3 caracteres de homoclave alfanumérica.
 const RFC_REGEX = /^[A-ZÑ&]{3}\d{6}[A-Z0-9]{3}$/;
 
 function isLeapYear(year: number): boolean {
   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 }
 
-// Documented assumption: a 2-digit RFC year is inherently century-ambiguous;
-// 2000+YY is assumed to validate the day of month (leap years included).
-// The real homoclave check digit (SAT's proprietary algorithm) is not
-// implemented — only the format is validated.
+// Asunción documentada: un RFC de 2 dígitos de año es inherentemente ambiguo
+// de siglo; se asume 2000+AA para validar el día del mes (incluye bisiestos).
+// solo se valida el formato.
 function isEmbeddedDateValid(yy: string, mm: string, dd: string): boolean {
   const month = Number(mm);
   const day = Number(dd);

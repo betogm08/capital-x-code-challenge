@@ -5,8 +5,8 @@ import { daysBetween } from "../../utils/date";
 const MIN_TERM_DAYS = 15;
 const MAX_TERM_DAYS = 120;
 
-// `isInvoiceAlreadyFinanced` is received as a function (instead of importing
-// the repository) to keep this validator pure and decoupled from SQLite.
+// `isInvoiceAlreadyFinanced` se recibe como función (en vez de importar el
+// repositorio) para mantener este validador puro y desacoplado de SQLite.
 export function validateInvoices(
   invoices: InvoiceInput[],
   today: Date,

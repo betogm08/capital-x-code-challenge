@@ -1,6 +1,6 @@
-// Normalizes to UTC midnight so it can be compared against "YYYY-MM-DD"
-// dates (which Date already parses as UTC) without the current time
-// introducing fractional-day differences.
+// Normaliza a medianoche UTC para poder comparar contra fechas "YYYY-MM-DD"
+// (que Date ya interpreta como UTC) sin que la hora actual introduzca
+// diferencias de fracciones de día.
 export function todayUTC(): Date {
   const now = new Date();
   return new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));

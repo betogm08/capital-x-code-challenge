@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-// Only the shape/type of each field is validated here. Business rules
-// (monto > 0, date ranges, term, duplicates) live in the service and are
-// reported with the per-folio detail the endpoint requires.
+// Aquí solo se valida la forma/tipo de cada campo. Las reglas de negocio
+// (monto > 0, rangos de fecha, plazo, duplicados) viven en el service y se
+// reportan con el detalle por folio que pide el endpoint.
 const invoiceInputSchema = z.object({
   folio: z.string().trim().min(1, "folio es requerido"),
   deudor: z.string().trim().min(1, "deudor es requerido"),
