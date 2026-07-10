@@ -4,7 +4,7 @@ Esta es una API sin interfaz gráfica (solo backend) para manejar operaciones de
 factoraje financiero: das de alta clientes, los apruebas, les originas operaciones a
 partir de sus facturas, y puedes ver un resumen de sus operaciones.
 
-## 0. Stack y herramientas usadas
+## 1. Stack y herramientas usadas
 
 - **Node.js + TypeScript** — el runtime y el tipado.
 - **Express** — el framework HTTP, para definir las rutas y manejar requests/responses.
@@ -17,7 +17,7 @@ partir de sus facturas, y puedes ver un resumen de sus operaciones.
   a diseñar y construir este proyecto: la arquitectura, el esquema de la base de datos,
   los endpoints.
 
-## 1. Cómo correr el proyecto
+## 2. Cómo correr el proyecto
 
 Necesitas Node.js 18 o más nuevo.
 
@@ -59,7 +59,7 @@ rm -rf data
 
 La próxima vez que corras `npm run dev` se vuelve a crear vacía automáticamente.
 
-## 2. Arquitectura (qué hay en cada carpeta)
+## 3. Arquitectura (qué hay en cada carpeta)
 
 El proyecto está organizado en capas, y cada carpeta tiene un trabajo bien específico.
 La regla es que cada capa solo le habla a la de abajo, nunca al revés:
@@ -98,7 +98,7 @@ routes -> controllers -> services -> repositories -> db.ts
 errores. Todo son funciones. La única parte rara es `errors.ts`, que simula "tipos de
 error" sin usar clases (lo explico en la sección 4.4). -->
 
-## 3. Los endpoints
+## 4. Los endpoints
 
 ### `POST /clientes` — dar de alta un cliente
 
@@ -154,9 +154,9 @@ en total, y la fecha de vencimiento más próxima entre sus facturas que todaví
 Si el cliente no tiene operaciones, regresa todo en cero y la fecha en `null`.
 Si el cliente no existe, `404`.
 
-## 4. Decisiones técnicas
+## 5. Decisiones técnicas
 
-### 4.1 El middleware `validate`
+### 5.1 El middleware `validate`
 
 Este middleware (`middlewares/validate.ts`) es una función que arma otra función: le
 pasas un schema de Zod y te regresa un middleware de Express listo para usar en la ruta.
@@ -170,7 +170,7 @@ La ventaja de tenerlo como middleware, separado del controller, es que el contro
 ni se preocupa por validar nada cuando el código llega ahí, ya sabe que los datos
 tienen la forma correcta.
 
-### 4.2 Por qué usé Zod
+### 5.2 Por qué usé Zod
 
 Zod deja describir "así se debe ver este objeto" con código normal de TypeScript, y él
 solo se encarga de revisar que el dato que llegó cumpla eso. Lo elegí por dos razones:
@@ -187,7 +187,7 @@ que la fecha esté en rango, etc.) las dejé para los `services`, porque ahí s�
 poder acumular varios errores a la vez y decir "esta factura específica falló por esta
 razón específica", algo que Zod no está pensado para hacer bien en este caso.
 
-### 4.3 Por qué SQLite
+### 5.3 Por qué SQLite
 
 - **MySQL/Postgres de verdad**: es lo que usaría en un caso real, pero necesita tener un
   servidor de base de datos corriendo aparte, con su configuración, usuario, contraseña,
@@ -201,7 +201,7 @@ razón específica", algo que Zod no está pensado para hacer bien en este caso.
   `FOREIGN KEY`), y sus transacciones. Se comporta muchísimo más parecido a como sería
   en producción que guardar cosas en memoria.
 
-### 4.4 Los errores "factory" (`errors.ts`)
+### 5.4 Los errores "factory" (`errors.ts`)
 
 Hice funciones que arman el error: `notFoundError(mensaje)`, `badRequestError(mensaje)`,
 `conflictError(mensaje)` y `validationError(mensaje, detalles)`. Cada una agarra un
@@ -219,7 +219,7 @@ error es error de la misma API, y si es así, arma la respuesta JSON con el cód
 correctos. Si es un error que no esperaba (algo que de verdad se rompió), responde `500`
 genérico, para no filtrar detalles internos al que hizo el request.
 
-### 4.5 `isFolioAlreadyFinanced` (evitar el doble financiamiento)
+### 5.5 `isFolioAlreadyFinanced` (evitar el doble financiamiento)
 
 Esta función vive en `repositories/invoice.repository.ts` y resuelve una regla
 importante: un mismo folio de factura, para el mismo cliente, no se puede financiar dos
@@ -243,7 +243,7 @@ Esta función no se usa directo, se la paso como si fuera un parámetro a
 mismo. La idea es que el validador de reglas de negocio no tenga que saber nada de SQL,
 solo recibe una función que le responde sí/no.
 
-### 4.6 `fetchClientSummary` (el resumen del cliente)
+### 5.6 `fetchClientSummary` (el resumen del cliente)
 
 Esta función vive en `repositories/operation.repository.ts` y arma en una sola query
 todo lo que necesita el endpoint de resumen: cuántas operaciones tiene el cliente, cuánto
@@ -263,7 +263,7 @@ resultados. Con `LEFT JOIN`, el cliente sigue apareciendo con sus números en `0
 `null` en la fecha), que es justo lo que pide el endpoint quejarse, que un cliente sin
 operaciones no truene, solo regrese ceros.
 
-### 4.7 Por qué los montos se guardan en centavos
+### 5.7 Por qué los montos se guardan en centavos
 
 Si guardas dinero como un número decimal normal (`1000.55`), tarde o temprano te
 encuentras con errores de redondeo raros de JavaScript, tipo que `0.1 + 0.2` no da
@@ -278,7 +278,7 @@ el 85% (adelanto) o el 1.5% (comisión), y ahí redondeo con `Math.round` inmedi
 una sola vez, al centavo más cercano. La conversión de pesos a centavos (y de regreso) está en un solo
 lugar (`utils/money.ts`) para no repetir esa lógica en cada archivo.
 
-## 7. Qué haría diferente si esto fuera para producción
+## 6. Qué haría diferente si esto fuera para producción
 
 - Test cases con Jest o cualquier otra herramienta de testing.
 - Autenticación/autorización — ahora mismo cualquiera puede aprobar un cliente.
